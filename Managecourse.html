@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Courses</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f4f7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .course-container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .course-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .course-table th, .course-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .course-table th {
+            background-color: #033156;
+            color: white;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-container input,
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .form-container button {
+            background-color: #033156;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #02243d;
+        }
+
+        .action-buttons button {
+            margin: 0 5px;
+            padding: 5px 10px;
+        }
+
+        .action-buttons button.edit {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .action-buttons button.delete {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Manage Courses</h1>
+    <div class="course-container">
+        <!-- Course Table -->
+        <table class="course-table">
+            <thead>
+                <tr>
+                    <th>Course ID</th>
+                    <th>Course Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="courseList">
+                <!-- Dynamic Course Rows Here -->
+            </tbody>
+        </table>
+
+        <!-- Add/Edit Course Form -->
+        <div class="form-container">
+            <h3 id="formTitle">Add Course</h3>
+            <form id="courseForm">
+                <input type="hidden" id="courseId" name="courseId">
+                <input type="text" id="courseName" name="courseName" placeholder="Enter Course Name" required>
+                <button type="submit">Save Course</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const courseList = document.getElementById('courseList');
+        const courseForm = document.getElementById('courseForm');
+        const formTitle = document.getElementById('formTitle');
+        const courseIdInput = document.getElementById('courseId');
+        const courseNameInput = document.getElementById('courseName');
+
+        // Mock database for courses
+        let courses = [
+            { id: 1, name: "Master of Computer Applications (MCA)" },
+            { id: 2, name: "Data Science and Analytics" }
+        ];
+
+        // Function to render courses in the table
+        function renderCourses() {
+            courseList.innerHTML = '';
+            courses.forEach(course => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${course.id}</td>
+                    <td>${course.name}</td>
+                    <td class="action-buttons">
+                        <button class="edit" onclick="editCourse(${course.id})">Edit</button>
+                        <button class="delete" onclick="deleteCourse(${course.id})">Delete</button>
+                    </td>
+                `;
+                courseList.appendChild(row);
+            });
+        }
+
+        // Add or Update Course
+        courseForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const courseId = courseIdInput.value;
+            const courseName = courseNameInput.value;
+
+            if (courseId) {
+                // Update existing course
+                const course = courses.find(c => c.id === parseInt(courseId));
+                if (course) course.name = courseName;
+            } else {
+                // Add new course
+                const newCourse = {
+                    id: courses.length ? courses[courses.length - 1].id + 1 : 1,
+                    name: courseName
+                };
+                courses.push(newCourse);
+            }
+
+            // Reset form and re-render courses
+            courseForm.reset();
+            formTitle.textContent = 'Add Course';
+            renderCourses();
+        });
+
+        // Edit Course
+        function editCourse(id) {
+            const course = courses.find(c => c.id === id);
+            if (course) {
+                courseIdInput.value = course.id;
+                courseNameInput.value = course.name;
+                formTitle.textContent = 'Edit Course';
+            }
+        }
+
+        // Delete Course
+        function deleteCourse(id) {
+            courses = courses.filter(course => course.id !== id);
+            renderCourses();
+        }
+
+        // Initial render
+        renderCourses();
+    </script>
+</body>
+</html>

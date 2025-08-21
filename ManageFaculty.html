@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Faculty</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f4f7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .faculty-container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .faculty-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .faculty-table th, .faculty-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .faculty-table th {
+            background-color: #033156;
+            color: white;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-container input,
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .form-container button {
+            background-color: #033156;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #02243d;
+        }
+
+        .action-buttons button {
+            margin: 0 5px;
+            padding: 5px 10px;
+        }
+
+        .action-buttons button.edit {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .action-buttons button.delete {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Manage Faculty</h1>
+    <div class="faculty-container">
+        <!-- Faculty Table -->
+        <table class="faculty-table">
+            <thead>
+                <tr>
+                    <th>Faculty ID</th>
+                    <th>Faculty Name</th>
+                    <th>Subject</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="facultyList">
+                <!-- Dynamic Faculty Rows Here -->
+            </tbody>
+        </table>
+
+        <!-- Add Faculty Form -->
+        <div class="form-container">
+            <h3>Add Faculty</h3>
+            <form id="facultyForm">
+                <input type="hidden" id="facultyId" name="facultyId">
+                <input type="text" id="facultyName" name="facultyName" placeholder="Enter Faculty Name" required>
+                <input type="text" id="facultySubject" name="facultySubject" placeholder="Enter Faculty Subject" required>
+                <button type="submit">Save Faculty</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const facultyList = document.getElementById('facultyList');
+        const facultyForm = document.getElementById('facultyForm');
+        const facultyIdInput = document.getElementById('facultyId');
+        const facultyNameInput = document.getElementById('facultyName');
+        const facultySubjectInput = document.getElementById('facultySubject');
+
+        // Mock database for faculty
+        let faculty = [
+            { id: 1, name: "Dr. John Doe", subject: "Mathematics" },
+            { id: 2, name: "Dr. Jane Smith", subject: "Physics" }
+        ];
+
+        // Function to render faculty data in the table
+        function renderFaculty() {
+            facultyList.innerHTML = '';
+            faculty.forEach(fac => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${fac.id}</td>
+                    <td>${fac.name}</td>
+                    <td>${fac.subject}</td>
+                    <td class="action-buttons">
+                        <button class="delete" onclick="deleteFaculty(${fac.id})">Delete</button>
+                    </td>
+                `;
+                facultyList.appendChild(row);
+            });
+        }
+
+        // Add Faculty
+        facultyForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const facultyName = facultyNameInput.value;
+            const facultySubject = facultySubjectInput.value;
+
+            // Add new faculty
+            const newFaculty = {
+                id: faculty.length ? faculty[faculty.length - 1].id + 1 : 1,
+                name: facultyName,
+                subject: facultySubject
+            };
+            faculty.push(newFaculty);
+
+            // Reset form and re-render faculty data
+            facultyForm.reset();
+            renderFaculty();
+        });
+
+        // Delete Faculty
+        function deleteFaculty(id) {
+            faculty = faculty.filter(f => f.id !== id);
+            renderFaculty();
+        }
+
+        // Initial render
+        renderFaculty();
+    </script>
+</body>
+</html>

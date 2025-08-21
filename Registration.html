@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f1f4f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #033156;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        button {
+            width: 100%;
+            background-color: #033156;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        button:hover {
+            background-color: #04527a;
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .link a {
+            text-decoration: none;
+            color: #033156;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Student Registration</h1>
+        <form id="registrationForm">
+            <label for="studentName">Full Name:</label>
+            <input type="text" id="studentName" name="studentName" placeholder="Enter your full name" required>
+
+            <label for="studentEmail">Email:</label>
+            <input type="email" id="studentEmail" name="studentEmail" placeholder="Enter your email" required>
+
+            <label for="studentPassword">Password:</label>
+            <input type="password" id="studentPassword" name="studentPassword" placeholder="Enter your password" required>
+
+            <button type="submit">Register</button>
+        </form>
+        <div class="link">
+            <a href="Login.html">Already registered? Login here</a>
+        </div>
+    </div>
+
+    <script>
+        const registrationForm = document.getElementById('registrationForm');
+
+        registrationForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const studentName = document.getElementById('studentName').value;
+            const studentEmail = document.getElementById('studentEmail').value;
+            const studentPassword = document.getElementById('studentPassword').value;
+
+            // Store student details in localStorage (for simplicity)
+            localStorage.setItem('studentName', studentName);
+            localStorage.setItem('studentEmail', studentEmail);
+            localStorage.setItem('studentPassword', studentPassword);
+
+            alert('Registration successful! Redirecting to login page.');
+            window.location.href = 'Login.html';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fees Structure</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f1f4f7;
+        }
+
+        header {
+            background-color: #033156;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .content {
+            margin: 20px auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .content h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #033156;
+            color: white;
+        }
+
+        .form-container {
+            margin: 20px 0;
+        }
+
+        .form-container input, .form-container button {
+            padding: 10px;
+            margin: 5px 0;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .form-container button {
+            background-color: #033156;
+            color: white;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #04527a;
+        }
+
+        .delete-button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .delete-button:hover {
+            background-color: darkred;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background-color: #033156;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .back-button:hover {
+            background-color: #04527a;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Fees Structure</h1>
+    </header>
+    <div class="content">
+        <h2>Course Fee Details</h2>
+        <table id="feesTable">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Duration</th>
+                    <th>Fees (INR)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>MCA</td>
+                    <td>2 Years</td>
+                    <td>1,50,000</td>
+                    <td><button class="delete-button" onclick="deleteRow(this)">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>MBA</td>
+                    <td>2 Years</td>
+                    <td>1,20,000</td>
+                    <td><button class="delete-button" onclick="deleteRow(this)">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="form-container">
+            <h2>Add New Fee Structure</h2>
+            <form id="addFeeForm">
+                <input type="text" id="courseName" placeholder="Course Name" required>
+                <input type="text" id="courseDuration" placeholder="Course Duration" required>
+                <input type="number" id="courseFees" placeholder="Course Fees (INR)" required>
+                <button type="submit">Add Fee Structure</button>
+            </form>
+        </div>
+
+        <a href="MCAdashboard.html" class="back-button">Back to Dashboard</a>
+    </div>
+
+    <script>
+        const feesTable = document.getElementById('feesTable').querySelector('tbody');
+        const addFeeForm = document.getElementById('addFeeForm');
+
+        // Function to delete a row
+        function deleteRow(button) {
+            const row = button.parentNode.parentNode;
+            feesTable.removeChild(row);
+        }
+
+        // Function to add a new fee structure
+        addFeeForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get form values
+            const courseName = document.getElementById('courseName').value;
+            const courseDuration = document.getElementById('courseDuration').value;
+            const courseFees = document.getElementById('courseFees').value;
+
+            // Create a new row
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${courseName}</td>
+                <td>${courseDuration}</td>
+                <td>${courseFees}</td>
+                <td><button class="delete-button" onclick="deleteRow(this)">Delete</button></td>
+            `;
+
+            // Append the new row to the table
+            feesTable.appendChild(newRow);
+
+            // Clear form fields
+            addFeeForm.reset();
+        });
+    </script>
+</body>
+</html>

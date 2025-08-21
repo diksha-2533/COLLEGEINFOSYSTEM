@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - College Information Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f4f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            color: #023e8a;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .submit-button {
+            background-color: #0077b6;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        .submit-button:hover {
+            background-color: #005f8d;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .register-link a {
+            color: #0077b6;
+            text-decoration: none;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        function validateLogin(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const role = document.getElementById("role").value.trim();
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
+
+            const fixedUsername = "hod123"; // Fixed HOD username
+            const fixedPassword = "hod0000"; // Fixed HOD password
+
+            if (role === "HOD") {
+                if (username === fixedUsername && password === fixedPassword) {
+                    alert("HOD login successful! Redirecting to Department Page...");
+                    window.location.href = "MCAdashboard.html"; // Redirect to Department Page
+                } else {
+                    displayError("Invalid HOD username or password!");
+                }
+            } else if (role === "Student") {
+                alert("Student login successful! Redirecting...");
+                window.location.href = "Studentdashboard.html"; // Redirect to Student dashboard
+            } else {
+                displayError("Please select a valid role!");
+            }
+        }
+
+        function displayError(message) {
+            const errorMessage = document.getElementById("error-message");
+            errorMessage.textContent = message;
+        }
+        
+        
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <form onsubmit="validateLogin(event)">
+            <label for="role">Login as:</label>
+            <select id="role" name="role" required>
+                <option value="">Select Role</option>
+                <option value="HOD">HOD</option>
+                <option value="Student">Student</option>
+            </select>
+
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+            <button type="submit" class="submit-button">Login</button>
+        </form>
+        <div id="error-message" class="error-message"></div>
+        <div class="registration-link">
+            Don't have an account? <a href="registration.html">Register here</a>
+        </div>
+    </div>
+</body>
+</html>

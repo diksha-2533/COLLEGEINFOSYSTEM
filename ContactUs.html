@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - College Information System</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f1f4f7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        h1, h3 {
+            margin: 0;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #033156;
+            color: #fff;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .college-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 2rem;
+            background-color: #fff;
+            margin: 2rem auto;
+            width: 60%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        section p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        form p {
+            margin: 1rem 0;
+        }
+
+        form label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        form input, form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-top: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .submit-button {
+            background-color: #0077b6;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 6px;
+            width: 100%;
+        }
+
+        .submit-button:hover {
+            background-color: #005f8d;
+        }
+
+        .thank-you-message {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #033156;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="college-name">ASM Group of Institutes</div>
+        <nav>
+            <ul>
+                <li><a href="Home.html">Home</a></li>
+                <li><a href="AboutUs.html">About</a></li>
+                <li><a href="ContactUs.html">Contact Us</a></li>
+                <li><a href="Login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Contact Form Section -->
+    <section>
+        <h1>Contact Us</h1>
+        <p>Feel free to reach out to us. Fill in the form below and we'll get back to you shortly.</p>
+        <form id="contactForm">
+            <p>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+            </p>
+            <p>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+            </p>
+            <p>
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject" placeholder="Enter the subject" required>
+            </p>
+            <p>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="5" placeholder="Write your message here" required></textarea>
+            </p>
+            <p>
+                <button type="submit" class="submit-button">Send Message</button>
+            </p>
+        </form>
+
+        <!-- Thank You Message -->
+        <div class="thank-you-message" id="thankYouMessage">
+            Thank you for contacting us! You will be redirected to the home page shortly.
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; Visit Us<br>
+            Audyogik Shikshan Mandal MIDC, Block 'C' Chinchwad, Pune - 411019
+        </p>
+        <p>Email: enquiry@asmedu.org | Tel: +91-20-27475090</p>
+    </footer>
+
+    <script>
+        const contactForm = document.getElementById('contactForm');
+        const thankYouMessage = document.getElementById('thankYouMessage');
+
+        contactForm.addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value,
+            };
+
+            try {
+                const response = await fetch('http://localhost:5500/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                if (response.ok) {
+                    thankYouMessage.style.display = 'block';
+                    contactForm.reset();
+                    setTimeout(() => {
+                        window.location.href = 'Home.html';
+                    }, 3000);
+                } else {
+                    alert('Failed to submit the form. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
+            }
+        });
+    </script>
+</body>
+</html>

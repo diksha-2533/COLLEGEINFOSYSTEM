@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e8f0fe;
+        }
+
+        header {
+            background-color: #033156;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .dashboard-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .dashboard-card a {
+            text-decoration: none;
+            color: #033156;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .dashboard-card a:hover {
+            color: #04527a;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Student Dashboard</h1>
+    </header>
+
+    <main>
+        <h2>Welcome, Student!</h2>
+        <p>Here are your options:</p>
+
+        
+           
+            
+            <div class="dashboard-card">
+                <a href="Profile.html" id="Profile">Profile</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Example navigation logic
+       
+
+        document.getElementById('Profile').addEventListener('click', () => {
+            window.location.href = 'Profile.html'; // Replace with actual profile update page URL
+        });
+    </script>
+</body>
+</html>

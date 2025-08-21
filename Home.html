@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Information System</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f1f4f7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #033156;
+            color: #fff;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .college-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Main Section Styles */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .carousel {
+            width: 80%;
+            max-width: 900px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-images img {
+            width: 100%;
+            height: auto;
+            flex-shrink: 0;
+        }
+
+        .carousel-buttons {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+
+        .carousel-button {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            pointer-events: all;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .carousel-button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #033156;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="college-name">ASM Group of Institutes
+        </div>
+        <nav>
+            <ul>
+                <li><a href="Home.html">Home</a></li>
+                <li><a href="AboutUs.html">AboutUs</a></li>
+                <li><a href="ContactUs.html">ContactUs</a></li>
+                <li><a href="Login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Section with Image Scrolling -->
+    <main>
+        <div class="carousel">
+            <div class="carousel-images">
+                <img src="https://tse3.mm.bing.net/th?id=OIP.INx8eK1-EfizBDNJJZwPagHaEL&pid=Api&P=0&h=180" alt="Placeholder Image 1">
+                <img src="https://tse3.mm.bing.net/th?id=OIP.KD9zC0u8AVmq8HfSc55TygHaGI&pid=Api&P=0&h=180" alt="Placeholder Image 2">
+                <img src="https://t3.ftcdn.net/jpg/04/34/08/56/360_F_434085662_Pd3yWP81H8d7kGW5Z1J3SfSfvMgGsth7.jpg" alt="Placeholder Image 3">
+                <img src="https://tse4.mm.bing.net/th?id=OIP.9ldMVInkqolG-_5cls9P0QHaFH&pid=Api&P=0&h=180" alt="Placeholder Image 4">
+            </div>
+            <div class="carousel-buttons">
+                <button class="carousel-button" id="prev">Previous</button>
+                <button class="carousel-button" id="next">Next</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy;  Visit Us
+            Audyogik Shikshan Mandal MIDC, Block 'C' Chinchwad, Pune - 411019
+            Fax : 020 66351700
+            <p>Email : enquiry@asmedu.org</p>
+            
+             <p>Call Us
+            Tel : +91-20-27475090, +91-20-27478666, +91-20-27461804</p>
+            <p>Mob : 9422009207 / 9422009209 / 9422009210 / 9422009212</p>
+    </footer>
+
+    <!-- JavaScript for Image Scrolling -->
+    <script>
+        const carouselImages = document.querySelector('.carousel-images');
+        const images = document.querySelectorAll('.carousel-images img');
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+        
+        let currentIndex = 0;
+
+        function updateCarousel() {
+            const width = images[0].clientWidth;
+            carouselImages.style.transform = `translateX(${-currentIndex * width}px)`;
+        }
+
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateCarousel();
+        });
+
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateCarousel();
+        });
+
+        // Auto-scroll images every 3 seconds
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateCarousel();
+        }, 3000);
+
+        window.addEventListener('resize', updateCarousel);
+    </script>
+</body>
+</html>
